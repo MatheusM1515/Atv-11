@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 
 public class ConexaoBD {
-    private static final String URL = "jdbc:mysql://localhost:3306/escola";
+    private static final String URL = "jdbc:mysql://localhost:3306/minitok";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
