@@ -10,7 +10,7 @@ public class Postagem {
 
     public int curtidas = 0;
 
-    private Postagem(int id, int usuarioId, String conteudo){
+    public Postagem(int id, int usuarioId, String conteudo){
         this.id = id;
         this.usuarioId = usuarioId;
         this.conteudo = conteudo;

@@ -29,7 +29,7 @@ public class UsuarioDAO {
         }
     }
 
-    // ===================== CADASTRAR USUARIO
+    // ===================== CADASTRAR USUÁRIO
 
     public boolean cadastrar(Usuario usuario) {
 
@@ -42,7 +42,7 @@ public class UsuarioDAO {
     }
 
 
-    // ===================== INSERIR USUARIO NA DB
+    // ===================== INSERIR USUÁRIO NA DB
     public boolean inserir(Usuario usuarios) {
 
         String sql = "INSERT INTO usuarios (id_usuario, nome, email, senha) VALUES (?, ?, ?, ?)";
@@ -64,7 +64,7 @@ public class UsuarioDAO {
         }
     }
 
-    // ===================== LISTAR
+    // ===================== LISTAR USUÁRIO
 
     public List<Usuario> listar() {
 
@@ -91,6 +91,8 @@ public class UsuarioDAO {
 
         return lista;
     }
+
+    // ===================== BUSCAR USUÁRIO
 
     public Usuario buscarPorId(int id) {
 
@@ -120,7 +122,7 @@ public class UsuarioDAO {
         return null;
     }
 
-    // ===================== ATUALIZAR USUARIO
+    // ===================== ATUALIZAR USUÁRIO
 
     public boolean atualizar(Usuario usuario) {
 
@@ -142,7 +144,7 @@ public class UsuarioDAO {
             return false;
         }
     }
-    // ===================== DELETAR USUARIO
+    // ===================== DELETAR USUÁRIO
 
     public boolean deletar(int id) {
 
@@ -161,7 +163,7 @@ public class UsuarioDAO {
         }
     }
 
-    // ===================== LOGAR USUARIO
+    // ===================== LOGAR USUÁRIO
 
     public boolean login(String email, String senha) {
 
