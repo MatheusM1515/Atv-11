@@ -13,7 +13,7 @@ public class UsuarioDAO {
 
     public boolean emailExiste(String email) {
 
-        String sql = "SELECT id FROM usuarios WHERE email = ? LIMIT 1";
+        String sql = "SELECT id_usuario FROM usuarios WHERE email = ? LIMIT 1";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -146,7 +146,7 @@ public class UsuarioDAO {
 
     public boolean deletar(int id) {
 
-        String sql = "DELETE FROM usuarios WHERE id = ?";
+        String sql = "DELETE FROM usuarios WHERE id_usuario = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -165,7 +165,7 @@ public class UsuarioDAO {
 
     public boolean login(String email, String senha) {
 
-        String sql = "SELECT id FROM usuarios WHERE email = ? AND senha = ? LIMIT 1";
+        String sql = "SELECT id_usuario FROM usuarios WHERE email = ? AND senha = ? LIMIT 1";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

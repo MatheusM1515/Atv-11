@@ -11,13 +11,13 @@ public class Main {
         System.out.println("================ MINITOK ================");
 
         UsuarioDAO userDAO = new UsuarioDAO();
-        boolean repetir = true;
-        while (repetir) {
+
+        mainLoop: while (true) {
             System.out.println();
             System.out.println("1) Criar conta");
             System.out.println("2) Listar Usuarios");
             System.out.println("3) Atualizar Usuario");
-            System.out.println("4) Ecluir Usuario");
+            System.out.println("4) Excluir Usuario");
             System.out.println("5) Criar postagem");
             System.out.println("6) Listar postagens de usuario");
             System.out.println("7) Excluir postagem");
@@ -29,49 +29,126 @@ public class Main {
             System.out.println("13) Sair");
             System.out.print("Escolha uma opção: ");
 
-            int opcao= sc.nextInt();
+            if (!sc.hasNextLine()) {
+                System.out.println("\nEntrada encerrada. Saindo...");
+                break;
+            }
 
-            switch (opcao) {
+            String line = sc.nextLine();
+            if (line == null) {
+                System.out.println("\nEntrada encerrada. Saindo...");
+                break;
+            }
+
+            line = line.trim();
+            if (line.isEmpty()) {
+                continue;
+            }
+
+            int op;
+            try {
+                op = Integer.parseInt(line);
+            } catch (NumberFormatException ex) {
+                System.out.println(
+                    "Opção inválida. Digite um número entre 1 e 13."
+                );
+                continue;
+            }
+
+            switch (op) {
                 case 1:
-                    Usuario usuario= Usuario.cadastrarUsuario();
-                    userDAO.cadastrar(usuario);
+                    Usuario usuario = Usuario.cadastrarUsuario();
+                    if(userDAO.cadastrar(usuario))
+                        System.out.println("Usuario cadastrado com suscesso!");
+                    else
+                        System.out.println("Falha no cadastro");
                     break;
                 case 2:
-                    // pass
+                    System.out.println("\n--- LISTA DE USUARIOS ---");
+                    for (Usuario a : userDAO.listar()) {
+                        System.out.println(a.getId() + " | " + a.getNome() + " | " + a.getEmail());
+                    }
                     break;
                 case 3:
-                    // pass
+                    System.out.print("ID: ");
+                    int idUp = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.print("Novo nome: ");
+                    String nomeUp = sc.nextLine();
+
+                    System.out.print("Novo email: ");
+                    String emailUp = sc.nextLine();
+
+                    System.out.print("Nova senha: ");
+                    String senhaUp = sc.nextLine();
+
+                    Usuario alt = new Usuario(idUp, nomeUp, emailUp, senhaUp);
+
+                    if (userDAO.atualizar(alt))
+                        System.out.println("Atualizado!");
+                    else
+                        System.out.println("Erro ao atualizar.");
                     break;
                 case 4:
-                    // pass
+                   System.out.println("Qual o id do usuário que você deseja deletar? ");
+                   int idDel = sc.nextInt();
+                   if(userDAO.deletar(idDel))
+                       System.out.println("Usuario deletado");
+                   else
+                       System.out.println("Falha ao deletar o usuario ");
                     break;
                 case 5:
-                    // pass
+                    // TODO: implementar criar postagem
+                    System.out.println(
+                        "Funcionalidade 'Criar postagem' ainda não implementada."
+                    );
                     break;
                 case 6:
-                    // pass
+                    // TODO: implementar listar postagens de usuario
+                    System.out.println(
+                        "Funcionalidade 'Listar postagens de usuario' ainda não implementada."
+                    );
                     break;
                 case 7:
-                    // pass
+                    // TODO: implementar excluir postagem
+                    System.out.println(
+                        "Funcionalidade 'Excluir postagem' ainda não implementada."
+                    );
                     break;
                 case 8:
-                    // pass
+                    // TODO: implementar curtir postagem
+                    System.out.println(
+                        "Funcionalidade 'Curtir postagem' ainda não implementada."
+                    );
                     break;
                 case 9:
-                    // pass
+                    // TODO: implementar descurtir postagem
+                    System.out.println(
+                        "Funcionalidade 'Descurtir postagem' ainda não implementada."
+                    );
                     break;
                 case 10:
-                    // pass
+                    // TODO: implementar mostrar quantidade de curtidas
+                    System.out.println(
+                        "Funcionalidade 'Mostrar quantidade de curtidas' ainda não implementada."
+                    );
                     break;
                 case 11:
-                    // pass
+                    // TODO: implementar enviar direct
+                    System.out.println(
+                        "Funcionalidade 'Enviar direct' ainda não implementada."
+                    );
                     break;
                 case 12:
-                    // pass
+                    // TODO: implementar listar direct entre dois usuario
+                    System.out.println(
+                        "Funcionalidade 'Listar direct entre dois usuario' ainda não implementada."
+                    );
                     break;
                 case 13:
-                    repetir = false;
-                    break;
+                    System.out.println("Encerrando MINITOK. Até logo!");
+                    break mainLoop;
                 default:
                     System.out.println(
                         "Opção inválida. Digite um número entre 1 e 13."
@@ -79,6 +156,8 @@ public class Main {
                     break;
             }
         }
-        System.out.println("Encerrando MINITOK. Até logo!");
+        try {
+            sc.close();
+        } catch (Exception ignored) {}
     }
 }
