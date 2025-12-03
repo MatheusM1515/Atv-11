@@ -130,11 +130,5 @@ public class PostagemDAO {
 
         return lista;
     }
-
-
-
-
-
-
 }
 

@@ -1,7 +1,12 @@
 package view;
 
+import dao.DirectDAO;
+import dao.PostagemDAO;
 import dao.UsuarioDAO;
 import java.util.Scanner;
+
+import model.Direct;
+import model.Postagem;
 import model.Usuario;
 
 public class Main {
@@ -100,9 +105,7 @@ public class Main {
                     break;
                 case 5:
                     // TODO: implementar criar postagem
-                    System.out.println(
-                        "Funcionalidade 'Criar postagem' ainda não implementada."
-                    );
+
                     break;
                 case 6:
                     // TODO: implementar listar postagens de usuario
@@ -135,10 +138,8 @@ public class Main {
                     );
                     break;
                 case 11:
-                    // TODO: implementar enviar direct
-                    System.out.println(
-                        "Funcionalidade 'Enviar direct' ainda não implementada."
-                    );
+                    // TODO: implementar enviar directS
+
                     break;
                 case 12:
                     // TODO: implementar listar direct entre dois usuario
