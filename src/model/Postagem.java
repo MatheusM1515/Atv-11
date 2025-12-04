@@ -1,5 +1,7 @@
 package model;
 
+import util.ConexaoBD;
+
 import java.time.LocalDate;
 
 public class Postagem {
@@ -14,6 +16,15 @@ public class Postagem {
         this.id = id;
         this.usuarioId = usuarioId;
         this.conteudo = conteudo;
+    }
+
+    public static Postagem inserirPostagem() {
+        Postagem nova = new Postagem(usuarioId, conteudo);
+        nova.dataPostagem = LocalDate.now();
+        return nova;
+
+
+
     }
 
     public void atualizarPostagem(int id, int usuarioId, String conteudo){
@@ -57,7 +68,4 @@ public class Postagem {
     public void setConteudo(String conteudo){
         this.conteudo = conteudo;
     }
-
-
-
 }

@@ -105,7 +105,27 @@ public class Main {
                     break;
                 case 5:
                     // TODO: implementar criar postagem
+                 PostagemDAO dao = new PostagemDAO();
 
+                 Postagem postagem = Postagem.inserirPostagem();
+
+                 if (dao.inserir(postagem)){
+                     System.out.println("Postagem criada com sucesso!");
+
+                     System.out.println("ID do usuário: ");
+                     int usuarioId = sc.nextInt();
+                     sc.nextLine();
+
+                     System.out.println("Conteúdo da postagem: ");
+                     String conteudo = sc.nextLine();
+
+                     Postagem novaPostagem = new Postagem(1, usuarioId, conteudo);
+
+                     if(dao.inserir(novaPostagem))
+                         System.out.println("Postagem criada com sucesso!");
+                     else
+                         System.out.println("Falha ao criar postagem!");
+                 }
                     break;
                 case 6:
                     // TODO: implementar listar postagens de usuario
