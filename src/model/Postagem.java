@@ -18,13 +18,10 @@ public class Postagem {
         this.conteudo = conteudo;
     }
 
-    public static Postagem inserirPostagem() {
-        Postagem nova = new Postagem(usuarioId, conteudo);
-        nova.dataPostagem = LocalDate.now();
-        return nova;
-
-
-
+    public void criarPostagem(String novoConteudo){
+        this.conteudo = novoConteudo;
+        this.dataPostagem = LocalDate.now();
+        System.out.println("Postagem criada com sucesso!");
     }
 
     public void atualizarPostagem(int id, int usuarioId, String conteudo){
@@ -34,6 +31,8 @@ public class Postagem {
     }
 
     public void excluirPostagem(int id, int usuarioId, String conteudo){
+        this.conteudo = null;
+        System.out.println("Postagem excluída!");
 
     }
 

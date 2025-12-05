@@ -1,6 +1,7 @@
 package dao;
 
 import model.Postagem;
+
 import util.ConexaoBD;
 
 import java.sql.Connection;
@@ -15,7 +16,7 @@ public class PostagemDAO {
 
     public boolean inserir(Postagem postagem) {
 
-        String sql = "INSERT INTO postagens (id_postagem, fkIdUsuario, conteudo) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO postagens (id_postagem, fkIdUsuarios, conteudo) VALUES (?, ?, ?)";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -37,7 +38,7 @@ public class PostagemDAO {
 
     public boolean atualizar(Postagem postagem) {
 
-        String sql = "UPDATE postagens SET fkIdUsuario = ?, conteudo = ? WHERE id_postagem = ?";
+        String sql = "UPDATE postagens SET fkIdUsuarios = ?, conteudo = ? WHERE id_postagem = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -79,7 +80,7 @@ public class PostagemDAO {
 
     public Postagem buscarPorId(int id) {
 
-        String sql = "SELECT * FROM postagens WHERE id = ?";
+        String sql = "SELECT * FROM postagens WHERE id_postagem = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -91,7 +92,7 @@ public class PostagemDAO {
                 if (rs.next()) {
                     return new Postagem(
                             rs.getInt("id_postagem"),
-                            rs.getInt("fkIdUsuario"),
+                            rs.getInt("fkIdUsuarios"),
                             rs.getString("Conteudo")
                     );
                 }
@@ -106,7 +107,7 @@ public class PostagemDAO {
 
     // =============== LISTAR POSTAGEM
 
-    public List<Postagem> listar() {
+    public static List<Postagem> listar() {
 
         List<Postagem> lista = new ArrayList<>();
         String sql = "SELECT * FROM postagens";
@@ -119,7 +120,7 @@ public class PostagemDAO {
 
                 lista.add(new Postagem(
                         rs.getInt("id_postagem"),
-                        rs.getInt("fkIdUsuario"),
+                        rs.getInt("fkIdUsuarios"),
                         rs.getString("conteudo")
                 ));
             }

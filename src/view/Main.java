@@ -1,6 +1,7 @@
 package view;
 
-import dao.DirectDAO;
+//import dao.DirectDAO;
+import dao.CurtidaDAO;
 import dao.PostagemDAO;
 import dao.UsuarioDAO;
 import java.util.Scanner;
@@ -69,7 +70,7 @@ public class Main {
                         System.out.println("Falha no cadastro");
                     break;
                 case 2:
-                    System.out.println("\n--- LISTA DE USUARIOS ---");
+                    System.out.println("\n=== LISTA DE USUARIOS ===");
                     for (Usuario a : userDAO.listar()) {
                         System.out.println(a.getId() + " | " + a.getNome() + " | " + a.getEmail());
                     }
@@ -104,58 +105,80 @@ public class Main {
                        System.out.println("Falha ao deletar o usuario ");
                     break;
                 case 5:
-                    // TODO: implementar criar postagem
-                 PostagemDAO dao = new PostagemDAO();
+                    // Não está criando as postagem
+                    System.out.println("=== CRIAR POSTAGEM ===");
 
-                 Postagem postagem = Postagem.inserirPostagem();
+                    System.out.print("ID do usuário que está postando: ");
+                    int usuarioIdPost = sc.nextInt();
+                    sc.nextLine();
 
-                 if (dao.inserir(postagem)){
-                     System.out.println("Postagem criada com sucesso!");
+                    System.out.print("Conteúdo da postagem: ");
+                    String conteudoPost = sc.nextLine();
 
-                     System.out.println("ID do usuário: ");
-                     int usuarioId = sc.nextInt();
-                     sc.nextLine();
 
-                     System.out.println("Conteúdo da postagem: ");
-                     String conteudo = sc.nextLine();
+                    Postagem novaPostagem = new Postagem(0, usuarioIdPost, conteudoPost);
 
-                     Postagem novaPostagem = new Postagem(1, usuarioId, conteudo);
+                    PostagemDAO postagemDAO = new PostagemDAO();
 
-                     if(dao.inserir(novaPostagem))
-                         System.out.println("Postagem criada com sucesso!");
-                     else
-                         System.out.println("Falha ao criar postagem!");
-                 }
+                    if (postagemDAO.inserir(novaPostagem)) {
+                        System.out.println("Postagem criada com sucesso!");
+                    } else {
+                        System.out.println("Falha ao criar postagem.");
+                    }
                     break;
                 case 6:
-                    // TODO: implementar listar postagens de usuario
-                    System.out.println(
-                        "Funcionalidade 'Listar postagens de usuario' ainda não implementada."
-                    );
+                    // Não está listando as postagens
+                    System.out.println("\n=== LISTA DE POSTAGENS ===");
+                    for (Postagem p : PostagemDAO.listar()) {
+                        System.out.println(p.getId() + " | " + p.getUsuarioId() + " | " + p.getConteudo());
+                    }
                     break;
                 case 7:
                     // TODO: implementar excluir postagem
-                    System.out.println(
-                        "Funcionalidade 'Excluir postagem' ainda não implementada."
-                    );
                     break;
                 case 8:
-                    // TODO: implementar curtir postagem
-                    System.out.println(
-                        "Funcionalidade 'Curtir postagem' ainda não implementada."
-                    );
+                    System.out.println("=== CURTIR POSTAGEM ===");
+                    System.out.println("ID do usuário: ");
+                    int usuarioCurtidor = sc.nextInt();
+
+                    System.out.println("ID da postagem: ");
+                    int postagemCurtir = sc.nextInt();
+                    sc.nextLine();
+
+                    if (CurtidaDAO.verificarSeJaCurtiu(usuarioCurtidor, postagemCurtir)){
+                        System.out.println("Você já curtiu essa postagem!");
+                    } else{
+                        if (CurtidaDAO.curtir(usuarioCurtidor, postagemCurtir)){
+                            System.out.println("Postagem curtida com sucesso!");
+                        } else{
+                            System.out.println("Erro ao curtir postagem.");
+                        }
+                    }
                     break;
                 case 9:
-                    // TODO: implementar descurtir postagem
-                    System.out.println(
-                        "Funcionalidade 'Descurtir postagem' ainda não implementada."
-                    );
+                    System.out.println("=== DESCURTIR POSTAGEM ===");
+                    System.out.println("ID do usuário: ");
+                    int UsuarioDescurtir = sc.nextInt();
+
+                    System.out.println("ID da postagem: ");
+                    int postagemDescurtir = sc.nextInt();
+                    sc.nextLine();
+
+                    int usuarioDescurtir = 0;
+                    if (CurtidaDAO.descurtir(usuarioDescurtir, postagemDescurtir)) {
+                        System.out.println("Curtida removida com sucesso!");
+                    } else {
+                        System.out.println("Você não tinha curtido essa postagem ou ocorreu um erro.");
+                    }
                     break;
                 case 10:
-                    // TODO: implementar mostrar quantidade de curtidas
-                    System.out.println(
-                        "Funcionalidade 'Mostrar quantidade de curtidas' ainda não implementada."
-                    );
+                    System.out.println("=== TOTAL DE CURTIDAS ===");
+                    System.out.println("ID da postagem: ");
+                    int postagemContar = sc.nextInt();
+                    sc.nextLine();
+
+                    int totalCurtidas = CurtidaDAO.contarCurtidas(postagemContar);
+                    System.out.println("A postagem " + postagemContar + " possui " + totalCurtidas + " curtidas.");
                     break;
                 case 11:
                     // TODO: implementar enviar directS

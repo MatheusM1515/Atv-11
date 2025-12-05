@@ -8,23 +8,30 @@ public class Curtidas {
     private int usuarioId;
     private LocalDate dataCurtida;
 
-    private Curtidas(int id, int postagemId, int usuarioId){
+    public Curtidas(int id, int postagemId, int fkIdUsuario){
         this.id = id;
         this.postagemId = postagemId;
         this.usuarioId = usuarioId;
+        this.dataCurtida = LocalDate.now();
     }
 
     public void curtirPostagem(Postagem postagem){
-
-
+        postagem.curtidas++;
+        this.dataCurtida = LocalDate.now();
+        System.out.println("Postagem curtida!");
     }
 
     public void descurtirCurtida(Postagem postagem){
-
+        if(postagem.curtidas > 0){
+            postagem.curtidas--;
+            System.out.println("Curtida removida!");
+        } else{
+            System.out.println("Essa postagem não tem curtidas!");
+        }
     }
 
     public void contarCurtida(Postagem postagem){
-
+        System.out.println("Total de curtidas: " + postagem.curtidas);
     }
 
     public int getId(){
