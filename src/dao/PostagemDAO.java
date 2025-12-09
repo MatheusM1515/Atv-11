@@ -59,7 +59,7 @@ public class PostagemDAO {
 
     // =============== DELETAR POSTAGEM
 
-    public boolean deletar(int id) {
+    public static boolean deletar(int id) {
 
         String sql = "DELETE FROM postagens WHERE id_postagem = ?";
 

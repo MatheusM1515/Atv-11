@@ -9,14 +9,16 @@ public class Direct {
     private String mensagem;
     private LocalDate dataEnvio;
 
-    public Direct(int id, int remetendeId, int destinatarioId, String mensagem){
+    public Direct(int id, int fkIdremetende, int fkIddestinatario, String mensagem){
         this.id = id;
-        this.remetendeId = remetendeId;
-        this.destinatarioId = destinatarioId;
+        this.remetendeId = fkIdremetende;
+        this.destinatarioId = fkIddestinatario;
         this.mensagem = mensagem;
     }
 
     public void enviarMensagem(){
+        this.dataEnvio = LocalDate.now();
+        System.out.println("Mensagem enviada! " + mensagem);
 
     }
 
@@ -36,7 +38,7 @@ public class Direct {
         this.remetendeId = remetendeId;
     }
 
-    public int getDestinatarioId(int destinatarioId){
+    public int getDestinatarioId(){
         return destinatarioId;
     }
 
@@ -50,6 +52,14 @@ public class Direct {
 
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
+    }
+
+    public String getDataEnvio() {
+        return getDataEnvio();
+    }
+
+    public void setDataEnvio(LocalDate dataEnvio){
+        this.dataEnvio = dataEnvio;
     }
 }
 

@@ -8,7 +8,7 @@ public class Curtidas {
     private int usuarioId;
     private LocalDate dataCurtida;
 
-    public Curtidas(int id, int postagemId, int fkIdUsuario){
+    public Curtidas(int id, int fkIdPostagem, int fkIdUsuario){
         this.id = id;
         this.postagemId = postagemId;
         this.usuarioId = usuarioId;

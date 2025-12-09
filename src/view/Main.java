@@ -2,6 +2,7 @@ package view;
 
 //import dao.DirectDAO;
 import dao.CurtidaDAO;
+import dao.DirectDAO;
 import dao.PostagemDAO;
 import dao.UsuarioDAO;
 import java.util.Scanner;
@@ -9,6 +10,8 @@ import java.util.Scanner;
 import model.Direct;
 import model.Postagem;
 import model.Usuario;
+
+import javax.swing.*;
 
 public class Main {
 
@@ -127,14 +130,18 @@ public class Main {
                     }
                     break;
                 case 6:
-                    // Não está listando as postagens
                     System.out.println("\n=== LISTA DE POSTAGENS ===");
                     for (Postagem p : PostagemDAO.listar()) {
                         System.out.println(p.getId() + " | " + p.getUsuarioId() + " | " + p.getConteudo());
                     }
                     break;
                 case 7:
-                    // TODO: implementar excluir postagem
+                    System.out.println("Qual o id da postagem que você deseja deletar? ");
+                    int IdDel = sc.nextInt();
+                    if(PostagemDAO.deletar(IdDel))
+                        System.out.println("Postagem deletado!");
+                    else
+                        System.out.println("Falha ao deletar postagem. ");
                     break;
                 case 8:
                     System.out.println("=== CURTIR POSTAGEM ===");
@@ -182,13 +189,48 @@ public class Main {
                     break;
                 case 11:
                     // TODO: implementar enviar directS
+                    System.out.println("=== ENVIAR DIRECT ===");
 
+                    System.out.println("ID do remetente: ");
+                    int remetente = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("ID do destinatário: ");
+                    int destinatario = sc.nextInt();
+                    sc.nextLine();
+
+                    System.out.println("Mensagem: ");
+                    String mensagemDirect = sc.nextLine();
+
+                    Direct direct = new Direct(0, remetente, destinatario, mensagemDirect);
+                    direct.enviarMensagem();
+
+                    if(DirectDAO.enviar(direct)){
+                        System.out.println("Direct enviado!");
+                    } else {
+                        System.out.println("Erro ao enviar direct.");
+                    }
                     break;
                 case 12:
                     // TODO: implementar listar direct entre dois usuario
-                    System.out.println(
-                        "Funcionalidade 'Listar direct entre dois usuario' ainda não implementada."
-                    );
+                    System.out.println("=== LISTA DE DIRECTS ENTRE DOIS USUÁRIOS ===");
+
+                    System.out.println("ID do primeiro usuário: ");
+                    int u1 = sc.nextInt();
+
+                    System.out.println("ID do segundo usuário: ");
+                    int u2 = sc.nextInt();
+                    sc.nextLine();
+
+                    var conversas = DirectDAO.listarConversas(u1, u2);
+
+                    if(conversas.isEmpty()){
+                        System.out.println("Nenhuma mensagem entre esses usuários!");
+                    }else {
+                        for (Direct d: conversas){
+                            System.out.println(d.getDataEnvio() + " | " + d.getRemetendeId() + " -> " + d.getDestinatarioId() + " | " + d.getMensagem());
+                        }
+                    }
                     break;
                 case 13:
                     System.out.println("Encerrando MINITOK. Até logo!");

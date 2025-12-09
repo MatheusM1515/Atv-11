@@ -26,15 +26,15 @@ public class CurtidaDAO {
     }
 
 
-    public static boolean verificarSeJaCurtiu(int fkIdUsuario, int postagemId) {
+    public static boolean verificarSeJaCurtiu(int fkIdUsuario, int fkIdPostagem) {
 
-        String sql = "SELECT * FROM curtidas WHERE fkIdUsuario = ? AND postagem_id = ?";
+        String sql = "SELECT * FROM curtidas WHERE fkIdUsuario = ? AND fkIdPostagem = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, fkIdUsuario);
-            stmt.setInt(2, postagemId);
+            stmt.setInt(2, fkIdPostagem);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -47,20 +47,20 @@ public class CurtidaDAO {
     }
 
 
-    public static boolean curtir(int fkIdUsuario, int postagemId){
+    public static boolean curtir(int fkIdUsuario, int fkIdPostagem){
 
-        if (verificarSeJaCurtiu(fkIdUsuario, postagemId)) {
+        if (verificarSeJaCurtiu(fkIdUsuario, fkIdPostagem)) {
             System.out.println("Usuário já curtiu esta postagem.");
             return false;
         }
 
-        String sql = "INSERT INTO curtidas (fkIdUsuario, postagem_id, data_curtida) VALUES (?, ?, CURDATE())";
+        String sql = "INSERT INTO curtidas (fkIdUsuario, fkIdPostagem, data_curtida) VALUES (?, ?, CURDATE())";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, fkIdUsuario);
-            stmt.setInt(2, postagemId);
+            stmt.setInt(2, fkIdPostagem);
 
             stmt.executeUpdate();
             return true;
@@ -72,15 +72,15 @@ public class CurtidaDAO {
     }
 
 
-    public static boolean descurtir(int usuarioId, int postagemId) {
+    public static boolean descurtir(int fkIdUsuario, int fkIdPostagem) {
 
-        String sql = "DELETE FROM curtidas WHERE usuario_id = ? AND postagem_id = ?";
+        String sql = "DELETE FROM curtidas WHERE fkIdUsuario = ? AND fkIdPostagem = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, usuarioId);
-            stmt.setInt(2, postagemId);
+            stmt.setInt(1, fkIdUsuario);
+            stmt.setInt(2, fkIdPostagem);
 
             int linhas = stmt.executeUpdate();
 
@@ -93,14 +93,14 @@ public class CurtidaDAO {
     }
 
 
-    public static int contarCurtidas(int postagemId) {
+    public static int contarCurtidas(int fkIdPostagem) {
 
-        String sql = "SELECT COUNT(*) AS total FROM curtidas WHERE postagem_id = ?";
+        String sql = "SELECT COUNT(*) AS total FROM curtidas WHERE fkIdPostagem = ?";
 
         try (Connection conn = ConexaoBD.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setInt(1, postagemId);
+            stmt.setInt(1, fkIdPostagem);
 
             ResultSet rs = stmt.executeQuery();
 
